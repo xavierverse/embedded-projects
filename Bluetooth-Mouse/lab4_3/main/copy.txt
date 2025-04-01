@@ -1,0 +1,31 @@
+
+void hid_demo_task(void *pvParameters)
+{
+    const char *TAG = "hid_demo_task";
+    
+    ESP_LOGI(TAG, "starting");
+    
+    
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    int8_t x = 0;
+    while(1) {
+        vTaskDelay(2000 / portTICK_PERIOD_MS);
+        if (sec_conn) {
+            for (int i =0;i < 200;i++) {
+		esp_hidd_send_mouse_value(hid_conn_id, 0, x, 0);
+		x++;
+	    }
+	    
+	    vTaskDelay(3000 / portTICK_PERIOD_MS);
+	    
+            for (int i =0;i < 200;i++) {
+		esp_hidd_send_mouse_value(hid_conn_id, 0, x, 0);
+		x--;
+	    
+	    }
+    	    
+	    vTaskDelay(3000 / portTICK_PERIOD_MS);
+	}
+    }
+}
+
